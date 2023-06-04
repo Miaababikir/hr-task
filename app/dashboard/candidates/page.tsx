@@ -4,17 +4,30 @@ import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
-  Heading,
+  Button,
   Flex,
+  Heading,
   Input,
-  Select,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { users } from "@/utils/data/users";
+import { users as data } from "@/utils/data/users";
 import Table from "@/components/table/table";
-import { columns } from "@/app/dashboard/users/columns";
+import { columns } from "@/app/dashboard/candidates/columns";
 import { UserRole } from "@/shared/enums/user-role.enum";
+import {
+  AddIcon,
+  ChevronDownIcon,
+  EditIcon,
+  ExternalLinkIcon,
+  RepeatIcon,
+} from "@chakra-ui/icons";
+import { SiMicrosoftexcel } from "react-icons/si";
 
+const users = data.filter((user) => user.role === UserRole.Candidate);
 const Users = () => {
   return (
     <>
@@ -26,20 +39,27 @@ const Users = () => {
         </BreadcrumbItem>
 
         <BreadcrumbItem isCurrentPage>
-          <BreadcrumbLink>Users</BreadcrumbLink>
+          <BreadcrumbLink>Candidates</BreadcrumbLink>
         </BreadcrumbItem>
       </Breadcrumb>
       <Flex alignItems="center" justifyContent="space-between">
         <Heading fontSize="2xl" mt={4}>
-          Users Table
+          Candidates Table
         </Heading>
         <Flex alignItems="center">
-          <Input size="sm" bg="white" placeholder="Search..." />
-          <Select ml={2} size="sm" bg="white" placeholder="Role">
-            <option value={UserRole.SuperAdmin}>Super Admin</option>
-            <option value={UserRole.Admin}>Admin</option>
-            <option value={UserRole.Candidate}>Candidate</option>
-          </Select>
+          <Menu>
+            <MenuButton
+              as={Button}
+              size="sm"
+              rounded="sm"
+              rightIcon={<ChevronDownIcon />}
+            >
+              Actions
+            </MenuButton>
+            <MenuList>
+              <MenuItem icon={<SiMicrosoftexcel />}>Export Candidates</MenuItem>
+            </MenuList>
+          </Menu>
         </Flex>
       </Flex>
       <Box p={2} bg="white" shadow="sm" mt={4} rounded="md">

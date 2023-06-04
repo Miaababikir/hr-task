@@ -16,12 +16,12 @@ const Button: ComponentStyleConfig = {
 
   sizes: {
     sm: {
-      px: "2",
+      px: "5",
       py: "1",
     },
     base: {
-      px: "4",
-      py: "3",
+      px: "5",
+      py: "2",
     },
   },
   variants: {
@@ -47,10 +47,10 @@ const Button: ComponentStyleConfig = {
       },
     },
     light: {
-      bg: "gray.200",
+      bg: "white",
       color: "gray.600",
       _hover: {
-        bg: "gray.300",
+        bg: "gray.100",
       },
     },
     dark: {

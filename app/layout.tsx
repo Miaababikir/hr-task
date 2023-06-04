@@ -1,5 +1,7 @@
 import Providers from "@/app/providers";
 import "@/css/styles.css";
+import GlobalModal from "@/components/modals/global-modal";
+import Navbar from "@/components/navbar/navbar";
 
 export default function RootLayout({
   children,
@@ -9,7 +11,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning={true}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <GlobalModal />
+        </Providers>
       </body>
     </html>
   );

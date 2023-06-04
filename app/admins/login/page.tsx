@@ -4,19 +4,21 @@ import {
   Box,
   Button,
   Flex,
-  FormControl,
   Heading,
   Image,
-  Link as ChakraLink,
   Text,
+  useToast,
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import ControlledInput from "@/components/form/controlled-input";
 import LoginSchema from "@/shared/validation-schema/login.schema";
+import { useRouter } from "next/navigation";
 
 const Login = () => {
+  const router = useRouter();
+  const toast = useToast();
+
   const {
     control,
     handleSubmit,
@@ -25,7 +27,14 @@ const Login = () => {
     resolver: yupResolver(LoginSchema),
   });
 
-  const handleLogin = (data: any) => {};
+  const handleLogin = async () => {
+    await router.push("/dashboard");
+
+    toast({
+      title: "Welcome back",
+      status: "success",
+    });
+  };
 
   return (
     <Box bgGradient="linear(to-br, purple.500, purple.700)" minH="100vh" px={4}>
@@ -60,7 +69,7 @@ const Login = () => {
             </Text>
           </Box>
           <Box mt={4}>
-            <form onSubmit={handleSubmit(() => {})}>
+            <form onSubmit={handleSubmit(handleLogin)}>
               <ControlledInput
                 control={control}
                 errors={errors}

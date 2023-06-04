@@ -3,33 +3,36 @@ import {
   FormControl,
   FormErrorMessage,
   FormLabel,
-  Input as ChakraInput,
-  InputGroup,
-  InputLeftElement,
-  InputProps,
+  Select as ChakraSelect,
+  SelectProps,
 } from "@chakra-ui/react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { resolveObject } from "@/shared/helpers/helpers";
 
-type Props = InputProps & {
+interface SelectOption {
+  label: string;
+  value: string;
+}
+interface Props extends SelectProps {
   control: Control<any>;
   name: string;
   label?: string;
   placeholder?: string;
+  options: SelectOption[];
   icon?: ReactElement;
   errors?: FieldErrors;
-};
+}
 
-const ControlledInput = ({
+const ControlledSelect = ({
   control,
   name,
   label,
   placeholder,
+  options,
   errors,
   icon,
   ...rest
 }: Props) => {
-  const error = errors ? resolveObject(errors || {}, name) : null;
+  const error = (errors ?? {})[name];
 
   return (
     <FormControl isInvalid={!!error?.message}>
@@ -40,15 +43,18 @@ const ControlledInput = ({
         control={control}
         rules={{ required: true }}
         render={({ field }) => (
-          <InputGroup>
-            {icon && <InputLeftElement>{icon}</InputLeftElement>}
-            <ChakraInput
-              id={name}
-              {...rest}
-              {...field}
-              placeholder={placeholder}
-            />
-          </InputGroup>
+          <ChakraSelect
+            id={name}
+            {...rest}
+            {...field}
+            placeholder={placeholder}
+          >
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </ChakraSelect>
         )}
       />
       {error && <FormErrorMessage>{error.message as string}</FormErrorMessage>}
@@ -56,4 +62,4 @@ const ControlledInput = ({
   );
 };
 
-export default ControlledInput;
+export default ControlledSelect;
