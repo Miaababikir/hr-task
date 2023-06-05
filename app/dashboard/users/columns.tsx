@@ -60,14 +60,6 @@ export const columns: Column[] = [
         <MenuList>
           <ToggleModal
             as={MenuItem}
-            icon={<FiEye />}
-            modalType={ModalType.ViewUser}
-            payload={user}
-          >
-            View
-          </ToggleModal>
-          <ToggleModal
-            as={MenuItem}
             icon={<FiLock />}
             modalType={ModalType.ChangeUserPassword}
             payload={user}

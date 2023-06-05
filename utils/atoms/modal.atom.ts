@@ -9,7 +9,7 @@ export interface ModalState {
 
 const defaultState: ModalState = {
   isOpen: false,
-  modalType: ModalType.ViewUser,
+  modalType: ModalType.RequestInformation,
 };
 
 export const modalState = atom<ModalState>({

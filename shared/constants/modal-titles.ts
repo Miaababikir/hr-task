@@ -1,6 +1,6 @@
 import { ModalType } from "@/shared/enums/modal-type.enum";
 
-export const ModalTitles = {
+export const ModalTitles: any = {
   // User
   [ModalType.ChangeUserPassword]: "Change Password",
   [ModalType.GrantAccess]: "Grant Access",
