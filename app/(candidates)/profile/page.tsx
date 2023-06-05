@@ -4,10 +4,10 @@ import {
   Grid,
   Text,
   Heading,
-  SimpleGrid,
   GridItem,
   Button,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { useFieldArray, useForm } from "react-hook-form";
 import ControlledInput from "@/components/form/controlled-input";
@@ -15,39 +15,39 @@ import { FiPlus } from "react-icons/fi";
 import ControlledSelect from "@/components/form/controlled-select";
 import { educationLevels } from "@/shared/constants/select-options";
 import { users } from "@/utils/data/users";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ControlledTextarea from "@/components/form/controlled-textarea";
-
-const schema = yup.object().shape({
-  firstName: yup.string().required(),
-  lastName: yup.string().required(),
-  email: yup.string().email().required(),
-  address: yup.string().required(),
-  contacts: yup
-    .array()
-    .of(yup.number().typeError("Must be valid number"))
-    .required(),
-});
+import { format } from "date-fns";
+import schema from "./schema";
+import { FormFields } from "@/app/(candidates)/profile/types";
+import ControlledFileUpload from "@/components/form/controlled-file-upload";
 
 const user = users[4];
 const Profile = () => {
+  const toast = useToast();
+
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<any>({
+  } = useForm<FormFields>({
     resolver: yupResolver(schema),
     defaultValues: {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
       address: user.profile?.address,
-      contacts: user.profile?.contacts,
+      contacts: user.profile?.contacts?.map((contact) => ({ value: contact })),
       educationLevel: user.profile?.educationLevel,
-      workExperience: user.profile?.workExperience,
-      technicalKnowledge: user.profile?.technicalKnowledge,
-      cv: user.profile?.cv,
+      workExperience: user.profile?.workExperience?.map((item) => ({
+        ...item,
+        startDate: format(item.startDate, "yyyy-MM-dd"),
+        endDate: format(item.endDate, "yyyy-MM-dd"),
+      })),
+      technicalKnowledge: user.profile?.technicalKnowledge?.map((item) => ({
+        value: item,
+      })),
+      cv: "",
     },
   });
 
@@ -62,12 +62,25 @@ const Profile = () => {
       name: "workExperience",
     });
 
+  const { fields: technicalKnowledgeFields, append: appendTechnicalKnowledge } =
+    useFieldArray({
+      control,
+      name: "technicalKnowledge",
+    });
+
+  const handleProfileUpdate = () => {
+    toast({
+      title: "Profile updated",
+      status: "success",
+    });
+  };
+
   return (
     <Box bg="white" p={4} rounded="sm" shadow="md">
       <Heading as="h2" fontSize="3xl">
         Edit profile
       </Heading>
-      <form onSubmit={handleSubmit(() => {})}>
+      <form onSubmit={handleSubmit(handleProfileUpdate)}>
         <Grid
           templateColumns="2fr 3fr"
           py={10}
@@ -151,7 +164,7 @@ const Profile = () => {
                 <GridItem>
                   <ControlledInput
                     key={index}
-                    name={`contacts.${index}`}
+                    name={`contacts.${index}.value`}
                     control={control}
                     errors={errors}
                     type="number"
@@ -167,7 +180,7 @@ const Profile = () => {
                     borderColor="gray.200"
                     size="xs"
                     onClick={() => {
-                      appendContact({});
+                      appendContact({ value: 971 });
                     }}
                   >
                     <FiPlus />
@@ -279,6 +292,78 @@ const Profile = () => {
                 </Box>
               </GridItem>
             </Box>
+          </Box>
+        </Grid>
+        <Grid
+          templateColumns="2fr 3fr"
+          py={10}
+          borderBottom="1px"
+          borderColor="gray.200"
+        >
+          <Box>
+            <Text fontWeight="bold" fontSize="lg">
+              Technical knowledge
+            </Text>
+            <Text fontSize="sm" fontWeight="light">
+              Please make sure that you provide us with valid information
+            </Text>
+          </Box>
+          <Box>
+            <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+              {technicalKnowledgeFields.map((field, index) => (
+                <GridItem>
+                  <ControlledInput
+                    key={index}
+                    name={`technicalKnowledge.${index}.value`}
+                    control={control}
+                    errors={errors}
+                  />
+                </GridItem>
+              ))}
+              <GridItem display="flex" flexDirection="column">
+                <Box mt="auto">
+                  <Button
+                    variant="light"
+                    fontWeight="light"
+                    border="1px"
+                    borderColor="gray.200"
+                    size="xs"
+                    onClick={() => {
+                      appendTechnicalKnowledge({ value: "" });
+                    }}
+                  >
+                    <FiPlus />
+                    <Text as="span" ml={1}>
+                      New Technical knowledge
+                    </Text>
+                  </Button>
+                </Box>
+              </GridItem>
+            </Grid>
+          </Box>
+        </Grid>
+        <Grid
+          templateColumns="2fr 3fr"
+          py={10}
+          borderBottom="1px"
+          borderColor="gray.200"
+        >
+          <Box>
+            <Text fontWeight="bold" fontSize="lg">
+              Resume
+            </Text>
+            <Text fontSize="sm" fontWeight="light">
+              Please provide us with your updated resume
+            </Text>
+          </Box>
+          <Box>
+            <ControlledFileUpload
+              name="cv"
+              control={control}
+              errors={errors}
+              acceptedFileTypes="application/pdf"
+              type="file"
+            />
           </Box>
         </Grid>
         <Flex justifyContent="end" mt={4}>
