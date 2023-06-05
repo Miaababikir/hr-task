@@ -7,4 +7,5 @@ export enum ModalType {
   // Candidate
   RequestInformation = "RequestInformation",
   ExportCandidates = "ExportCandidates",
+  DeleteCandidateProfile = "DeleteCandidateProfile",
 }

@@ -24,14 +24,8 @@ const Navbar = () => {
 
   return (
     <>
-      <Box
-        bg="white"
-        shadow="md"
-        borderTop="4px"
-        borderColor="purple.400"
-        px={4}
-      >
-        <Box mx="auto" maxW="5xl">
+      <Box bg="white" shadow="md" borderTop="4px" borderColor="purple.400">
+        <Box mx="auto" px={{ base: 4, sm: 32 }}>
           <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
             <IconButton
               size={"md"}

@@ -6,6 +6,7 @@ import ChangePassword from "@/components/modals/users/change-password";
 import GrantAccess from "@/components/modals/users/grant-access";
 import DeleteUser from "@/components/modals/users/delete-user";
 import RequestInformation from "@/components/modals/candidates/request-information";
+import DeleteProfile from "@/components/modals/candidates/delete-profile";
 
 interface Props {
   modalType: ModalType;
@@ -22,6 +23,9 @@ const ModalFactory = ({ modalType, data }: Props) => {
 
   if (modalType === ModalType.RequestInformation)
     return <RequestInformation data={data} />;
+
+  if (modalType === ModalType.DeleteCandidateProfile)
+    return <DeleteProfile data={data} />;
   return <div></div>;
 };
 

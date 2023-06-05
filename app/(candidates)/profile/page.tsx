@@ -21,10 +21,15 @@ import { format } from "date-fns";
 import schema from "./schema";
 import { FormFields } from "@/app/(candidates)/profile/types";
 import ControlledFileUpload from "@/components/form/controlled-file-upload";
+import { useRecoilState } from "recoil";
+import { modalState } from "@/utils/atoms/modal.atom";
+import { ModalType } from "@/shared/enums/modal-type.enum";
 
 const user = users[4];
 const Profile = () => {
   const toast = useToast();
+
+  const [_, setModalState] = useRecoilState(modalState);
 
   const {
     control,
@@ -342,12 +347,7 @@ const Profile = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid
-          templateColumns="2fr 3fr"
-          py={10}
-          borderBottom="1px"
-          borderColor="gray.200"
-        >
+        <Grid templateColumns="2fr 3fr" py={10}>
           <Box>
             <Text fontWeight="bold" fontSize="lg">
               Resume
@@ -367,7 +367,21 @@ const Profile = () => {
           </Box>
         </Grid>
         <Flex justifyContent="end" mt={4}>
-          <Button type="submit">Submit</Button>
+          <Button
+            variant="danger"
+            onClick={() =>
+              setModalState({
+                isOpen: true,
+                modalType: ModalType.DeleteCandidateProfile,
+                payload: user,
+              })
+            }
+          >
+            Delete profile
+          </Button>
+          <Button ml={2} type="submit">
+            Submit
+          </Button>
         </Flex>
       </form>
     </Box>

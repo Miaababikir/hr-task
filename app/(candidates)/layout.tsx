@@ -7,7 +7,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Navbar />
-      <Box mx={{ base: 4, sm: "auto" }} maxW="5xl" mt={4}>
+      <Box px={{ base: 4, sm: 32 }} pb={8} mt={4}>
         {children}
       </Box>
     </>
