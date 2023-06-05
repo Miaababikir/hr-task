@@ -11,6 +11,7 @@ import {
   Link as ChakraLink,
   SimpleGrid,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import React from "react";
@@ -19,6 +20,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { EmailIcon, PhoneIcon } from "@chakra-ui/icons";
 import ControlledInput from "@/components/form/controlled-input";
+import { useRouter } from "next/navigation";
 
 const schema = yup.object().shape({
   firstName: yup.string().required(),
@@ -30,6 +32,9 @@ const schema = yup.object().shape({
 });
 
 const Register = () => {
+  const router = useRouter();
+  const toast = useToast();
+
   const {
     control,
     handleSubmit,
@@ -37,6 +42,15 @@ const Register = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const handleRegister = async () => {
+    await router.push("/");
+
+    toast({
+      title: "Welcome",
+      status: "success",
+    });
+  };
 
   return (
     <Box bgGradient="linear(to-br, purple.500, purple.700)" minH="100vh" px={4}>
@@ -71,7 +85,7 @@ const Register = () => {
             </Text>
           </Box>
           <Box mt={4}>
-            <form onSubmit={handleSubmit(() => {})}>
+            <form onSubmit={handleSubmit(handleRegister)}>
               <SimpleGrid columns={{ base: 1, sm: 2 }} spacing={2}>
                 <FormControl>
                   <ControlledInput
