@@ -80,7 +80,7 @@ const ViewCandidate = ({ params }: any) => {
         </ChakraLink>
       </Flex>
       <Box bg="white" p={4} mt={4} rounded="md">
-        <SimpleGrid columns={2}>
+        <SimpleGrid columns={{ base: 1, md: 2 }}>
           <Box>
             <Heading as="h2" fontSize="2xl">
               Work experiences
@@ -121,7 +121,7 @@ const ViewCandidate = ({ params }: any) => {
         <Heading as="h2" fontSize="2xl">
           Personal Information
         </Heading>
-        <SimpleGrid columns={3} spacing={4} mt={4}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mt={4}>
           <Flex alignItems="center">
             <Box
               p={2}

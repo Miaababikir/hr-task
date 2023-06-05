@@ -30,7 +30,7 @@ const Dashboard = () => {
         </BreadcrumbItem>
       </Breadcrumb>
       <Box mt={4}>
-        <SimpleGrid columns={4} spacing={4}>
+        <SimpleGrid columns={{ base: 1, md: 4 }} spacing={4}>
           <Box
             bg="white"
             p={4}
@@ -116,7 +116,7 @@ const Dashboard = () => {
             </Flex>
           </Box>
         </SimpleGrid>
-        <SimpleGrid columns={2} spacing={4} mt={4}>
+        <SimpleGrid columns={{ base: 1, md: 2 }} spacing={4} mt={4}>
           <Box
             bg="white"
             p={4}

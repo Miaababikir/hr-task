@@ -16,7 +16,11 @@ export default function Home() {
       <Heading as="h2" fontSize="3xl">
         Available jobs
       </Heading>
-      <Grid templateColumns="repeat(3, 1fr)" gap={6} mt={4}>
+      <Grid
+        templateColumns={{ base: "1fr", md: "repeat(3, 1fr)" }}
+        gap={6}
+        mt={4}
+      >
         <Box p={4} bg="white" rounded="md">
           <Image
             src="https://asset.brandfetch.io/idJ_HhtG0Z/idS8F1wmDj.jpeg"

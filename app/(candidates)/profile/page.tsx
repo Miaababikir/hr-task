@@ -87,7 +87,7 @@ const Profile = () => {
       </Heading>
       <form onSubmit={handleSubmit(handleProfileUpdate)}>
         <Grid
-          templateColumns="2fr 3fr"
+          templateColumns={{ base: "1fr", md: "2fr 3fr" }}
           py={10}
           borderBottom="1px"
           borderColor="gray.200"
@@ -150,7 +150,7 @@ const Profile = () => {
           </Box>
         </Grid>
         <Grid
-          templateColumns="2fr 3fr"
+          templateColumns={{ base: "1fr", md: "2fr 3fr" }}
           py={10}
           borderBottom="1px"
           borderColor="gray.200"
@@ -199,7 +199,7 @@ const Profile = () => {
           </Box>
         </Grid>
         <Grid
-          templateColumns="2fr 3fr"
+          templateColumns={{ base: "1fr", md: "2fr 3fr" }}
           py={10}
           borderBottom="1px"
           borderColor="gray.200"
@@ -216,7 +216,7 @@ const Profile = () => {
             <Box>
               {workExperienceFields.map((field, index) => (
                 <Grid
-                  templateColumns="repeat(2, 1fr)"
+                  templateColumns={{ base: "1fr", md: "1fr 1fr" }}
                   gap={2}
                   mb={6}
                   pb={6}
@@ -300,7 +300,7 @@ const Profile = () => {
           </Box>
         </Grid>
         <Grid
-          templateColumns="2fr 3fr"
+          templateColumns={{ base: "1fr", md: "2fr 3fr" }}
           py={10}
           borderBottom="1px"
           borderColor="gray.200"
@@ -314,7 +314,10 @@ const Profile = () => {
             </Text>
           </Box>
           <Box>
-            <Grid templateColumns="repeat(4, 1fr)" gap={4}>
+            <Grid
+              templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
+              gap={4}
+            >
               {technicalKnowledgeFields.map((field, index) => (
                 <GridItem>
                   <ControlledInput
@@ -347,7 +350,7 @@ const Profile = () => {
             </Grid>
           </Box>
         </Grid>
-        <Grid templateColumns="2fr 3fr" py={10}>
+        <Grid templateColumns={{ base: "1fr", md: "2fr 3fr" }} py={10}>
           <Box>
             <Text fontWeight="bold" fontSize="lg">
               Resume
